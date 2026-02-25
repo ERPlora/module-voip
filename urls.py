@@ -7,6 +7,10 @@ urlpatterns = [
     # Dashboard
     path('', views.dashboard, name='dashboard'),
 
+    # Navigation tab aliases
+    path('calls/', views.call_logs_list, name='calls'),
+
+
     # CallLog
     path('call_logs/', views.call_logs_list, name='call_logs_list'),
     path('call_logs/add/', views.call_log_add, name='call_log_add'),
