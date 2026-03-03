@@ -27,3 +27,15 @@ PERMISSIONS = [
 'voip.add_calllog',
 'voip.manage_settings',
 ]
+
+ROLE_PERMISSIONS = {
+    "admin": ["*"],
+    "manager": [
+        "add_calllog",
+        "view_calllog",
+    ],
+    "employee": [
+        "add_calllog",
+        "view_calllog",
+    ],
+}
