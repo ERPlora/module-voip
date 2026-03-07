@@ -1,0 +1,82 @@
+{% load djicons i18n %}
+<div data-back-url="{% url 'voip:call_logs_list' %}" hidden></div>
+
+<div class="p-4">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold">{% trans "Edit Calllog" %}</h1>
+        <div class="flex gap-2">
+            <a class="btn btn-ghost btn-sm"
+               hx-get="{% url 'voip:call_logs_list' %}"
+               hx-target="#main-content-area"
+               hx-push-url="true">
+                {% trans "Cancel" %}
+            </a>
+            <button type="submit" form="edit-call_log-form" class="btn btn-sm color-primary">
+                {% icon "checkmark-outline" %}
+                {% trans "Save" %}
+            </button>
+        </div>
+    </div>
+
+        {% if error %}
+        <div class="callout callout-error">
+            <div class="callout-content"><span class="callout-text">{{ error }}</span></div>
+        </div>
+        {% endif %}
+    <!-- Form -->
+    <form id="edit-call_log-form"
+          hx-post="{% url 'voip:call_log_edit' obj.id %}" class="max-w-2xl">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body flex flex-col gap-4">
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Caller Number" %}</label>
+                <input type="text" name="caller_number" class="input input-sm w-full" value="{{ obj.caller_number }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Callee Number" %}</label>
+                <input type="text" name="callee_number" class="input input-sm w-full" value="{{ obj.callee_number }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Direction" %}</label>
+                <input type="text" name="direction" class="input input-sm w-full" value="{{ obj.direction }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Status" %}</label>
+                <select name="status" class="select select-sm w-full">
+                <option value="">---</option>
+                </select>
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Started At" %}</label>
+                <input type="datetime-local" name="started_at" class="input input-sm w-full" value="{{ obj.started_at }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Duration Seconds" %}</label>
+                <input type="number" name="duration_seconds" class="input input-sm w-full" value="{{ obj.duration_seconds }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Agent Id" %}</label>
+                <input type="text" name="agent_id" class="input input-sm w-full" value="{{ obj.agent_id }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Recording Url" %}</label>
+                <input type="url" name="recording_url" class="input input-sm w-full" value="{{ obj.recording_url }}">
+                </div>
+
+                <div>
+                <label class="text-sm font-medium mb-1 block">{% trans "Notes" %}</label>
+                <textarea name="notes" class="textarea textarea-sm w-full" rows="3">{{ obj.notes }}</textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
